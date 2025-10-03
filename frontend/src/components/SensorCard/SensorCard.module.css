@@ -1,0 +1,41 @@
+.card {
+  width: 400px;
+  height: 200px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 24px;
+  background: var(--color-surface);
+  transition: box-shadow 0.5s ease;
+  font-family: var(--font-body);
+  background: linear-gradient(
+    185deg,
+    var(--color-surface),
+    color-mix(in srgb, var(--accent-cyan) 20%, var(--color-surface))
+  );
+  box-shadow: 0 2px 2px
+    color-mix(in srgb, var(--color-text-secondary) 20%, transparent);
+}
+
+/* .card:hover {
+  box-shadow: 0 4px 8px
+    color-mix(in srgb, var(--color-text-secondary) 20%, transparent);
+  border-color: var(--accent-cyan);
+} */
+
+.title {
+  color: var(--color-text);
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 0px;
+}
+
+.label {
+  font-size: 18;
+  font-weight: 600;
+  margin-right: 12px;
+}
+
+.value {
+  font-size: 18;
+  font-weight: 200;
+}

@@ -1,0 +1,3 @@
+#define WIFI_SSID "YOUR_WIFI_NAME"
+#define WIFI_PASS "YOUR_WIFI_PASSWORD"
+#define SERVER_URL "http://SERVER_ADDRESS:4000/api/sensor"

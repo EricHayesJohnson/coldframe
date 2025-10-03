@@ -1,0 +1,16 @@
+.logoWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logoText {
+  font-size: 32px;
+  font-family: var(--font-logo);
+  color: var(--color-text);
+}
+
+.leaf {
+  margin-right: 4px;
+  margin-top: 5px;
+}
