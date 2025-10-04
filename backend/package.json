@@ -2,19 +2,25 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "dist/index.js",
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register ./src/index.ts",
-    "test": "vitest"
+    "test": "vitest",
+    "seed": "npx prisma db seed"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@prisma/client": "^6.16.3",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
     "pino": "^9.11.0",
     "pino-pretty": "^13.1.1",
+    "prisma": "^6.16.3",
     "socket.io": "^4.8.1",
     "zod": "^4.1.11"
   },
