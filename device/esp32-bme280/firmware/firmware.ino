@@ -1,72 +1,101 @@
+/**
+ * Coldframe Sensor Firmware – ESP32 + BME280
+ * Reads sensor data every minute and POSTs JSON to backend.
+ * 
+ * Features:
+ * - Non-blocking 60-second timer using millis()
+ * - Wi-Fi connection with retry / auto-restart
+ * - JSON payload via ArduinoJson
+ * - Clean HTTP open/close per request
+ */
+
+#include <Arduino.h>
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
 #include <WiFi.h>
 #include <HTTPClient.h>
+#include <ArduinoJson.h>
 #include "secrets.h"
 
-// ====== SENSOR ======
-Adafruit_BME280 bme; // I2C
+Adafruit_BME280 bme;
+
+const unsigned long POST_INTERVAL = 60UL * 1000;
+unsigned long lastPostTime = 0;
 
 void setup() {
   Serial.begin(115200);
 
-  // --- Connect WiFi ---
+  // --- Wi-Fi connect with retry ---
+  Serial.printf("Connecting to WiFi SSID: %s\n", WIFI_SSID);
   WiFi.begin(WIFI_SSID, WIFI_PASS);
-  Serial.print("Connecting to WiFi");
-  while (WiFi.status() != WL_CONNECTED) {
+  const int MAX_RETRIES = 30;
+  int attempts = 0;
+
+  while (WiFi.status() != WL_CONNECTED && attempts < MAX_RETRIES) {
     delay(500);
     Serial.print(".");
+    attempts++;
   }
-  Serial.println("\n✅ WiFi connected!");
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
+  if (WiFi.status() != WL_CONNECTED) {
+    Serial.println("\n❌ WiFi connection failed — restarting...");
+    delay(2000);
+    ESP.restart();
+  }
+  Serial.printf("\n✅ WiFi connected!  IP: %s\n", WiFi.localIP().toString().c_str());
 
-  // --- Init sensor ---
+  // --- Sensor init ---
   if (!bme.begin(0x76)) {
-    Serial.println("❌ Could not find a valid BME280 sensor, check wiring!");
-    while (1);
+    Serial.println("❌ Could not find BME280 sensor, check wiring!");
+    while (1); // stop if not found
   }
   Serial.println("✅ BME280 sensor ready");
 }
 
 void loop() {
-  // --- Read sensor values ---
-  float tempC = bme.readTemperature();
-  float humidity = bme.readHumidity();
-  float pressure = bme.readPressure() / 100.0F; // Pa → hPa
+  unsigned long now = millis();
 
-  // --- Print locally ---
-  Serial.print("Temp: "); Serial.print(tempC); Serial.println(" *C");
-  Serial.print("Humidity: "); Serial.print(humidity); Serial.println(" %");
-  Serial.print("Pressure: "); Serial.print(pressure); Serial.println(" hPa");
-  Serial.println("-----------------------");
+  // every POST_INTERVAL ms
+  if (now - lastPostTime >= POST_INTERVAL) {
+    lastPostTime = now;
 
-  // --- POST to backend ---
-  if (WiFi.status() == WL_CONNECTED) {
+    // --- Read sensor ---
+    float tempC = bme.readTemperature();
+    float humidity = bme.readHumidity();
+    float pressure = bme.readPressure() / 100.0F; // Pa → hPa
+
+    Serial.printf("Temp: %.2f °C | Humidity: %.2f %% | Pressure: %.2f hPa\n", tempC, humidity, pressure);
+
+    // --- Wi-Fi check ---
+    if (WiFi.status() != WL_CONNECTED) {
+      Serial.println("⚠️ Wi-Fi lost — attempting reconnect...");
+      WiFi.reconnect();
+      return; // skip this cycle
+    }
+
+    // --- Build JSON payload ---
+    StaticJsonDocument<256> doc;
+    doc["sensorId"]     = "esp32-1";
+    doc["temperatureC"] = tempC;
+    doc["humidityPct"]  = humidity;
+    doc["pressureHPa"]  = pressure;
+
+    String payload;
+    serializeJson(doc, payload);
+
+    // --- Send POST ---
     HTTPClient http;
     http.begin(SERVER_URL);
     http.addHeader("Content-Type", "application/json");
 
-    String payload = "{";
-    payload += "\"sensorId\":\"ESP32-1\",";
-    payload += "\"temperatureC\":" + String(tempC, 2) + ",";
-    payload += "\"humidityPct\":" + String(humidity, 2) + ",";
-    payload += "\"pressureHPa\":" + String(pressure, 2);
-    payload += "}";
-
-    int httpResponseCode = http.POST(payload);
-    if (httpResponseCode > 0) {
-      Serial.print("✅ POST Response: ");
-      Serial.println(httpResponseCode);
+    int code = http.POST(payload);
+    if (code > 0) {
+      Serial.printf("✅ HTTP %d\n", code);
     } else {
-      Serial.print("❌ POST Error: ");
-      Serial.println(http.errorToString(httpResponseCode).c_str());
+      Serial.printf("❌ POST failed (%d)\n", code);
     }
-    http.end();
-  } else {
-    Serial.println("⚠️ WiFi not connected!");
+    http.end(); // free memory
   }
 
-  delay(5000);
+  // loop remains free for future tasks; no blocking delay
 }

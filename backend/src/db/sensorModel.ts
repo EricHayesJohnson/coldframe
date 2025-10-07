@@ -23,13 +23,12 @@ export async function createSensorReading(reading: SensorReading) {
   });
 }
 
-export async function getRecentReadings(limit = 10): Promise<SensorReading[]> {
+export async function getReadingsSince(since: Date): Promise<SensorReading[]> {
   const rows = await prisma.sensorReading.findMany({
-    orderBy: { timestamp: "desc" },
-    take: limit,
+    where: { timestamp: { gte: since } },
+    orderBy: { timestamp: "asc" },
   });
 
-  // Convert Prisma Dates → ISO strings for the shared type
   return rows.map((r) => ({
     ...r,
     timestamp: r.timestamp.toISOString(),

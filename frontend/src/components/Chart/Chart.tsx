@@ -8,39 +8,45 @@ import {
   AnimatedLineSeries,
   Tooltip,
 } from "@visx/xychart";
-import { useSocketData } from "@/context/SocketContext";
 import { SensorReading } from "@shared/types";
+import { useTrendsData } from "@/context/TrendsContext";
 
-// Accessors
-const xAccessor = (d: SensorReading) =>
-  d.timestamp ? new Date(d.timestamp).getTime() : 0;
+const xAccessor = (d: SensorReading) => new Date(d.timestamp).getTime();
 const yTemp = (d: SensorReading) => d.temperatureC;
 const yHumidity = (d: SensorReading) => d.humidityPct;
 
 export function Chart() {
-  const { history } = useSocketData();
+  const { data, isLoading } = useTrendsData();
+
+  if (isLoading) {
+    return <p className="text-gray-500 mt-4">Loading trend data...</p>;
+  }
+
+  if (!data?.length) {
+    return <p className="text-gray-500 mt-4">No data available.</p>;
+  }
 
   return (
-    <div style={{ width: "100%", height: "500px" }}>
+    <div className="w-full h-[500px]">
       <XYChart
         height={500}
-        xScale={{ type: "linear" }}
+        xScale={{ type: "time" }}
         yScale={{ type: "linear" }}
       >
-        <AnimatedGrid columns={true} rows={true} />
-        <AnimatedAxis orientation="bottom" />
-        <AnimatedAxis orientation="left" />
+        <AnimatedGrid columns rows />
+        <AnimatedAxis orientation="bottom" label="Time" />
+        <AnimatedAxis orientation="left" label="Value" />
 
         <AnimatedLineSeries
-          dataKey="Temperature"
-          data={history}
+          dataKey="Temperature (°C)"
+          data={data}
           xAccessor={xAccessor}
           yAccessor={yTemp}
         />
 
         <AnimatedLineSeries
-          dataKey="Humidity"
-          data={history}
+          dataKey="Humidity (%)"
+          data={data}
           xAccessor={xAccessor}
           yAccessor={yHumidity}
         />
@@ -51,23 +57,16 @@ export function Chart() {
             const d = tooltipData?.nearestDatum?.datum as
               | SensorReading
               | undefined;
-
-            return d ? (
-              <div
-                style={{
-                  background: "white",
-                  padding: "4px",
-                  border: "1px solid #ccc",
-                  fontSize: "0.85rem",
-                }}
-              >
+            if (!d) return null;
+            return (
+              <div className="bg-white border border-gray-300 p-1.5 text-sm rounded">
                 <div>🌡 Temp: {d.temperatureC.toFixed(1)} °C</div>
                 <div>💧 Humidity: {d.humidityPct.toFixed(1)} %</div>
-                {d.timestamp && (
-                  <div>🕒 {new Date(d.timestamp).toLocaleTimeString()}</div>
-                )}
+                <div className="text-gray-500">
+                  {new Date(d.timestamp).toLocaleTimeString()}
+                </div>
               </div>
-            ) : null;
+            );
           }}
         />
       </XYChart>

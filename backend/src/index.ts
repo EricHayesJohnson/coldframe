@@ -8,6 +8,7 @@
  */
 
 import express from "express";
+import cors from "cors";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { config } from "dotenv";
@@ -34,9 +35,16 @@ export const io = new Server(httpServer, {
 
 app.use(express.json());
 
+app.use(
+  cors({
+    origin: FRONTEND_ORIGIN,
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
+
 app.use(ROUTES.SENSOR, sensorRoutes(io));
 app.use(ROUTES.HEALTHCHECK, healthcheckRoutes);
-
 app.use(notFoundHandler);
 app.use(errorHandler);
 

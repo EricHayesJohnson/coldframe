@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Michroma, Exo_2 } from "next/font/google";
 import { SocketProvider } from "@/context/SocketContext";
+import { TrendsProvider } from "@/context/TrendsContext";
 import { NavBar } from "@/components/Navbar";
 import "@/app/globals.css";
 
@@ -30,7 +31,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${michroma.variable} ${exo2.variable}`}>
         <NavBar />
-        <SocketProvider>{children}</SocketProvider>
+        <TrendsProvider>
+          <SocketProvider>{children}</SocketProvider>
+        </TrendsProvider>
       </body>
     </html>
   );
