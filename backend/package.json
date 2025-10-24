@@ -1,21 +1,16 @@
 {
-  "name": "backend",
+  "name": "coldframe-backend",
   "version": "1.0.0",
-  "main": "dist/index.js",
-  "description": "Coldframe backend",
-  "license": "ISC",
+  "description": "Coldframe backend API server",
+  "license": "MIT",
+  "main": "dist/src/index.js",
   "scripts": {
-    "dev": "nx serve backend",
-    "build": "nx build shared && nx build backend && cp -r ../shared/dist ./dist/shared",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc",
     "start": "node dist/src/index.js",
-    "seed": "npx prisma db seed",
-    "test": "nx test backend"
-  },
-  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
+    "seed": "npx prisma db seed"
   },
   "dependencies": {
-    "@coldframe/shared": "file:../shared",
     "@prisma/client": "^6.16.3",
     "cors": "^2.8.5",
     "date-fns": "^4.1.0",
@@ -30,14 +25,8 @@
   "devDependencies": {
     "@types/express": "^5.0.3",
     "@types/node": "^24.5.2",
-    "@types/supertest": "^6.0.3",
-    "supertest": "^7.1.4",
-    "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
-    "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.9.2",
-    "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.2.4"
+    "typescript": "^5.9.2"
   },
   "engines": {
     "node": ">=18"
