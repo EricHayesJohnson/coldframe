@@ -9,7 +9,7 @@
  */
 
 import { prisma } from "./prisma";
-import { SensorReading } from "@coldframe/shared/types";
+import { SensorReading } from "../types";
 
 export async function createSensorReading(reading: SensorReading) {
   return prisma.sensorReading.create({

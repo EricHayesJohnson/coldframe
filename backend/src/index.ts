@@ -1,12 +1,3 @@
-import path from "path";
-import { createRequire } from "module";
-
-const Module = require("module") as typeof import("module") & {
-  globalPaths: string[];
-};
-const sharedPath = path.join(__dirname, "../shared/dist");
-Module.globalPaths.push(sharedPath);
-
 /**
  * Coldframe Backend - Phase 1
  *
@@ -25,7 +16,7 @@ import { logger } from "./utils/logger";
 import { sensorRoutes } from "./routes/sensor";
 import { healthcheckRoutes } from "./routes/healthcheck";
 import { notFoundHandler, errorHandler } from "./middleware/errorHandler";
-import { ROUTES } from "@coldframe/shared/routes";
+import { ROUTES } from "./routes";
 
 config(); // load .env
 
