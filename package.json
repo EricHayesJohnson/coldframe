@@ -10,7 +10,6 @@
     "build": "nx run-many --target=build --all",
     "lint": "nx run-many --target=lint --all",
     "graph": "nx graph",
-
     "dev:backend": "nx run backend:dev",
     "dev:frontend": "nx run frontend:dev",
     "build:backend": "nx run backend:build",
@@ -30,7 +29,7 @@
     "@vitest/ui": "^3.0.0",
     "eslint": "~8.57.0",
     "jiti": "2.4.2",
-    "nx": "22.0.1",
+    "nx": "^22.0.1",
     "vite": "^7.0.0",
     "vitest": "^3.0.0"
   },

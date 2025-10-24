@@ -1,0 +1,15 @@
+{
+  "name": "shared",
+  "root": "shared",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "outputPath": "shared/dist",
+        "main": "shared/index.ts",
+        "tsConfig": "shared/tsconfig.json"
+      }
+    }
+  }
+}
