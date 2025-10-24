@@ -2,20 +2,22 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "dist/index.js",
+  "description": "Coldframe backend",
+  "license": "ISC",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register ./src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "nx vite:test",
+    "seed": "npx prisma db seed"
+  },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
   },
-  "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register ./src/index.ts",
-    "test": "vitest",
-    "seed": "npx prisma db seed"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
+    "@coldframe/shared": "file:../shared",
     "@prisma/client": "^6.16.3",
+    "cors": "^2.8.5",
     "date-fns": "^4.1.0",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
@@ -36,5 +38,8 @@
     "typescript": "^5.9.2",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }

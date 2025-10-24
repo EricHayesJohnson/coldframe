@@ -1,6 +1,10 @@
 import { Router } from "express";
 import { Server } from "socket.io";
-import { SensorReading, SensorReadingInput, SocketEvents } from "@shared/types";
+import {
+  SensorReading,
+  SensorReadingInput,
+  SocketEvents,
+} from "@coldframe/shared/types";
 import { logger } from "../utils/logger";
 import { SensorReadingSchema } from "../validation/sensorSchema";
 import {

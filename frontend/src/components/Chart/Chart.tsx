@@ -8,7 +8,7 @@ import {
   AnimatedLineSeries,
   Tooltip,
 } from "@visx/xychart";
-import { SensorReading } from "@shared/types";
+import { SensorReading } from "@coldframe/shared/types";
 import { useTrendsData } from "@/context/TrendsContext";
 
 const xAccessor = (d: SensorReading) => new Date(d.timestamp).getTime();

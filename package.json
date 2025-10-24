@@ -4,5 +4,39 @@
     "backend",
     "frontend",
     "shared"
-  ]
+  ],
+  "scripts": {
+    "dev": "nx run-many --target=dev --projects=backend,frontend --parallel",
+    "build": "nx run-many --target=build --all",
+    "lint": "nx run-many --target=lint --all",
+    "graph": "nx graph",
+
+    "dev:backend": "nx run backend:dev",
+    "dev:frontend": "nx run frontend:dev",
+    "build:backend": "nx run backend:build",
+    "build:frontend": "nx run frontend:build",
+    "lint:backend": "nx run backend:lint",
+    "lint:frontend": "nx run frontend:lint"
+  },
+  "devDependencies": {
+    "@nx/eslint": "22.0.1",
+    "@nx/js": "^22.0.1",
+    "@nx/next": "^22.0.1",
+    "@nx/node": "^22.0.1",
+    "@nx/vite": "22.0.1",
+    "@nx/web": "22.0.1",
+    "@swc-node/register": "^1.11.1",
+    "@swc/core": "^1.13.5",
+    "@vitest/ui": "^3.0.0",
+    "eslint": "~8.57.0",
+    "jiti": "2.4.2",
+    "nx": "22.0.1",
+    "vite": "^7.0.0",
+    "vitest": "^3.0.0"
+  },
+  "dependencies": {
+    "next": "~15.2.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
 }

@@ -16,7 +16,7 @@ import { logger } from "./utils/logger";
 import { sensorRoutes } from "./routes/sensor";
 import { healthcheckRoutes } from "./routes/healthcheck";
 import { notFoundHandler, errorHandler } from "./middleware/errorHandler";
-import { ROUTES } from "@shared/routes";
+import { ROUTES } from "@coldframe/shared/routes";
 
 config(); // load .env
 

@@ -7,10 +7,9 @@ import React, {
   useState,
   useCallback,
 } from "react";
-import { SensorReading } from "@shared/types";
+import { SensorReading, SocketEvents } from "@coldframe/shared/types";
 import { fetchSensorHistory } from "@/api/sensor";
 import { socket } from "@/lib/socketClient";
-import { SocketEvents } from "@shared/types";
 
 type TrendsContextValue = {
   data: SensorReading[];
@@ -25,7 +24,7 @@ export const TrendsProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [data, setData] = useState<SensorReading[]>([]);
-  const [range, setRange] = useState(24);
+  const [range, setRange] = useState(100);
   const [isLoading, setIsLoading] = useState(false);
 
   const loadData = useCallback(

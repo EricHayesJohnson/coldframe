@@ -8,7 +8,7 @@
  * No Express or Socket.IO dependencies.
  */
 
-import { SensorReading } from "@shared/types";
+import { SensorReading } from "@coldframe/shared/types";
 import { createSensorReading, getReadingsSince } from "../db/sensorModel";
 import { subHours } from "date-fns";
 import { logger } from "../utils/logger";

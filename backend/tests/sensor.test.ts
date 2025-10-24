@@ -1,7 +1,7 @@
 import request from "supertest";
 import { app, io } from "../src/index";
-import { ROUTES } from "@shared/routes";
-import { SocketEvents } from "@shared/types";
+import { ROUTES } from "@coldframe/shared/routes";
+import { SocketEvents } from "@coldframe/shared/types";
 import { vi } from "vitest";
 
 const validReading = {

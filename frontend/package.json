@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
-    "start": "next start",
+    "dev": "nx next:dev --turbopack",
+    "build": "nx next:build --turbopack",
+    "start": "nx next:start",
     "lint": "eslint",
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "test": "nx vite:test run",
+    "test:watch": "nx vite:test"
   },
   "dependencies": {
     "@react-spring/web": "^10.0.3",

@@ -1,4 +1,4 @@
-import { SensorReading } from "@shared/types";
+import { SensorReading } from "@coldframe/shared/types";
 
 const BASE_URL = process.env.API_URL ?? "http://localhost:4000";
 
