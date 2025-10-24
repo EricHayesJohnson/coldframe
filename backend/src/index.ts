@@ -1,3 +1,12 @@
+import path from "path";
+import { createRequire } from "module";
+
+const Module = require("module") as typeof import("module") & {
+  globalPaths: string[];
+};
+const sharedPath = path.join(__dirname, "../shared/dist");
+Module.globalPaths.push(sharedPath);
+
 /**
  * Coldframe Backend - Phase 1
  *
