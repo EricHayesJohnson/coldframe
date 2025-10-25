@@ -7,12 +7,13 @@ import {
   handleNewReading,
   fetchRecentReadings,
 } from "../services/sensorService";
+import { verifyApiKey } from "../middleware/verifyApiKey";
 
 export function sensorRoutes(io: Server) {
   const router = Router();
 
-  // POST /sensor → broadcast + delegate persistence
-  router.post("/", async (req, res) => {
+  // Protected POST /sensor → broadcast + delegate persistence
+  router.post("/", verifyApiKey, async (req, res) => {
     const parsed = SensorReadingSchema.safeParse(req.body);
     if (!parsed.success) {
       return res.status(400).json({
@@ -42,7 +43,7 @@ export function sensorRoutes(io: Server) {
     }
   });
 
-  // GET /sensor/history?range=24
+  // Public GET /sensor/history?range=24
   router.get("/history", async (req, res) => {
     try {
       const rangeHours = Number(req.query.range || 24);

@@ -76,7 +76,7 @@ void loop() {
 
     // --- Build JSON payload ---
     StaticJsonDocument<256> doc;
-    doc["sensorId"]     = "esp32-1";
+    doc["sensorId"]     = SENSOR_ID;
     doc["temperatureC"] = tempC;
     doc["humidityPct"]  = humidity;
     doc["pressureHPa"]  = pressure;
@@ -91,6 +91,7 @@ void loop() {
     HTTPClient http;
     http.begin(SERVER_URL);
     http.addHeader("Content-Type", "application/json");
+    http.addHeader("x-api-key", SENSOR_API_KEYS);
 
     int code = http.POST(payload);
     if (code > 0) {
