@@ -14,6 +14,7 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
 #include <WiFi.h>
+#include <WiFiClientSecure.h>
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 #include "secrets.h"
@@ -84,6 +85,9 @@ void loop() {
     serializeJson(doc, payload);
 
     // --- Send POST ---
+    WiFiClientSecure client;
+    client.setInsecure();  // ⚠️ disables certificate verification
+
     HTTPClient http;
     http.begin(SERVER_URL);
     http.addHeader("Content-Type", "application/json");
@@ -91,6 +95,7 @@ void loop() {
     int code = http.POST(payload);
     if (code > 0) {
       Serial.printf("✅ HTTP %d\n", code);
+      Serial.println(http.getString());
     } else {
       Serial.printf("❌ POST failed (%d)\n", code);
     }

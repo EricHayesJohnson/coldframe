@@ -13,13 +13,12 @@ The system stores hourly snapshots in a Supabase (Postgres) database and visuali
 
 ## Tech Stack
 
-| Layer                | Tech                                     | Notes                                           |
-| -------------------- | ---------------------------------------- | ----------------------------------------------- |
-| **Frontend**         | Next.js 15 / React 19                    | Live updates via Socket.IO client               |
-| **Backend**          | Express 5 / Socket.IO 4                  | REST + WebSocket event gateway                  |
-| **Database**         | Supabase (Postgres)                      | Prisma ORM for schema + queries                 |
-| **Shared Types**     | TypeScript library (`@coldframe/shared`) | Ensures strict typing across frontend + backend |
-| **IoT Device**       | ESP32 Feather HUZZAH + BME280            | Posts sensor data every 60s via WiFi            |
-| **Monorepo Tooling** | Nx                                       | Manages builds, caching, dependency graph       |
+| Layer                | Tech                          | Notes                                     |
+| -------------------- | ----------------------------- | ----------------------------------------- |
+| **Frontend**         | Next.js 15 / React 19         | Live updates via Socket.IO client         |
+| **Backend**          | Express 5 / Socket.IO 4       | REST + WebSocket event gateway            |
+| **Database**         | Supabase (Postgres)           | Prisma ORM for schema + queries           |
+| **IoT Device**       | ESP32 Feather HUZZAH + BME280 | Posts sensor data every 60s via WiFi      |
+| **Monorepo Tooling** | Nx                            | Manages builds, caching, dependency graph |
 
 ---

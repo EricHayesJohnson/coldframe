@@ -7,7 +7,7 @@ import React, {
   useState,
   useCallback,
 } from "react";
-import { SensorReading, SocketEvents } from "@coldframe/shared/types";
+import { SensorReading, SocketEvents } from "../shared/types";
 import { fetchSensorHistory } from "@/api/sensor";
 import { socket } from "@/lib/socketClient";
 

@@ -1,6 +1,6 @@
-import { SensorReading } from "@coldframe/shared/types";
+import { SensorReading } from "../shared/types";
 
-const BASE_URL = process.env.API_URL ?? "http://localhost:4000";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 
 /**
  * Fetch persisted sensor readings from the backend API.
@@ -50,6 +50,8 @@ export async function fetchLatestReading(): Promise<SensorReading | null> {
       headers: { "Content-Type": "application/json" },
       cache: "no-store",
     });
+
+    console.log("Fetching history from", process.env.NEXT_PUBLIC_API_URL);
 
     if (!res.ok) {
       console.error("fetchLatestReading HTTP error:", res.status);

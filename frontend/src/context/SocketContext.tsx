@@ -16,7 +16,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { socket } from "@/lib/socketClient";
-import { SensorReading, SocketEvents } from "@coldframe/shared/types";
+import { SensorReading, SocketEvents } from "../shared/types";
 
 const HISTORY_THRESHOLD = -99; // keep the last 100 readings;
 

@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { SensorCard } from "../SensorCard";
 import { SocketContext } from "@/context/SocketContext";
-import type { SensorReading } from "@coldframe/shared/types";
+import type { SensorReading } from "../../../shared/types";
 
 describe("SensorCard", () => {
   it("renders fallback text when no sensor data", () => {
