@@ -12,13 +12,20 @@ import cors from "cors";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { config } from "dotenv";
+import fs from "fs";
 import { logger } from "./utils/logger";
 import { sensorRoutes } from "./routes/sensor";
 import { healthcheckRoutes } from "./routes/healthcheck";
 import { notFoundHandler, errorHandler } from "./middleware/errorHandler";
 import { ROUTES } from "./routes";
 
-config(); // load .env
+const localEnv = ".env.local";
+if (fs.existsSync(localEnv)) {
+  console.log("loading local overrides from .env.local");
+  config({ path: localEnv });
+} else {
+  config();
+}
 
 const PORT = process.env.PORT || 4000;
 const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || "http://localhost:3000";

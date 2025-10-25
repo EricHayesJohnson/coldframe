@@ -2,3 +2,4 @@
 #define WIFI_PASS "YOUR_WIFI_PASSWORD"
 #define SERVER_URL "http://SERVER_ADDRESS:4000/api/sensor"
 #define SENSOR_API_KEYS "YOUR_API_KEY"
+#define USE_PROD true

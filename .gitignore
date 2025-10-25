@@ -17,7 +17,7 @@ yarn-error.log*
 
 # Env / Secrets
 .env
-.env.*
+.env*
 !.env.example
 *.pem
 device/esp32-bme280/firmware/secrets.h
