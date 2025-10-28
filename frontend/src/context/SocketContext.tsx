@@ -17,7 +17,9 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { socket } from "@/lib/socketClient";
 import { SensorReading, SocketEvents } from "../shared/types";
+import { MOCK_READING } from "@/test/mockSensorData";
 
+const isDev = process.env.NEXT_PUBLIC_DEV_MODE === "true";
 const HISTORY_THRESHOLD = -99; // keep the last 100 readings;
 
 type SocketContextValue = {
@@ -32,10 +34,13 @@ export const SocketContext = createContext<SocketContextValue | undefined>(
 export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [latest, setLatest] = useState<SensorReading | null>(null);
+  const [latest, setLatest] = useState<SensorReading | null>(
+    isDev ? MOCK_READING : null
+  );
   const [history, setHistory] = useState<SensorReading[]>([]);
 
   useEffect(() => {
+    if (isDev) return; // skip socket connection entirely
     socket.on(SocketEvents.SENSOR_UPDATE, (data: SensorReading) => {
       setLatest(data);
       setHistory((prev) => [...prev.slice(HISTORY_THRESHOLD), data]);
