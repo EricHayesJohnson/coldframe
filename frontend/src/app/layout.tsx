@@ -20,6 +20,11 @@ const exo2 = Exo_2({
 export const metadata: Metadata = {
   title: "Coldframe Dashboard",
   description: "Real-time garden monitoring",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({

@@ -9,6 +9,18 @@
   --accent-orange: #ff914d;
   --accent-purple: #b967ff;
   --accent-lime: #b4ff39;
+
+  /* Reference only — these are comments for humans, not functional vars */
+  --mobile: 600px;
+  --tablet: 1000px;
+  --desktop: 1200px;
+  /*
+  Breakpoint reference
+  --------------------
+  Mobile:  up to 600px
+  Tablet:  601–1000px
+  Desktop: 1001px+
+*/
 }
 
 html,

@@ -1,11 +1,15 @@
 "use client";
 
 import { SensorCard } from "@/components";
+import styles from "./page.module.css";
 
 export default function Page() {
   return (
-    <main style={{ padding: "32px", fontFamily: "sans-serif" }}>
-      <SensorCard title="ESP-32" />
+    <main className={styles.main}>
+      <div className={styles.wrapper}>
+        <SensorCard title="ESP-32: Inside" />
+        <SensorCard title="ESP-32: Outside" />
+      </div>
     </main>
   );
 }
