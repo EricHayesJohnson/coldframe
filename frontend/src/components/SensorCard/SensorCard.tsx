@@ -1,44 +1,80 @@
 "use client";
 
 import { useSocketData } from "@/context/SocketContext";
-import styles from "./SensorCard.module.css";
+import { useLatestReading } from "@/hooks/useLatestReading";
+import { getStatus } from "@/utils/getStatus";
+import { StatusBadge } from "../StatusBadge";
+import Skeleton from "react-loading-skeleton";
 import { cToF } from "@/utils/temperature";
 import { formatDateTime } from "@/utils/dateTime";
+import styles from "./SensorCard.module.css";
+import type { SensorReading } from "@/shared/types";
 
-type SensorCardProps = {
-  title: string;
-};
+type SensorCardProps = { title: string };
 
-export const SensorCard = ({ title }: SensorCardProps) => {
-  const { latest } = useSocketData();
+export function SensorCard({ title }: SensorCardProps) {
+  const { latest: socketLatest } = useSocketData();
+  const { latest: dbLatest, isLoading } = useLatestReading();
+  // let socketLatest = null;
+  // let dbLatest = null;
+  // let isLoading = false;
+  let reading = socketLatest ?? dbLatest;
 
-  if (!latest) {
-    return <p>Waiting for sensor data...</p>;
+  const { status } = getStatus({
+    fromSocket: socketLatest,
+    fromStore: dbLatest,
+    isLoading,
+  });
+
+  if (isLoading) {
+    return (
+      <div className={styles.card}>
+        <Skeleton count={5} height={24} style={{ marginBottom: 16 }} />
+      </div>
+    );
+  }
+
+  if (!reading) {
+    return (
+      <div className={styles.card}>
+        <div className={styles.header}>
+          <h2 className={styles.title}>{title}</h2>
+          <div className={styles.statusInline}>
+            <StatusBadge status={status} />
+            <p className={styles.statusLabel}>{status.toUpperCase()}</p>
+          </div>
+        </div>
+        <p>No sensor data available.</p>
+      </div>
+    );
   }
 
   return (
     <div className={styles.card}>
-      <p className={styles.title}>{title}</p>
+      <div className={styles.header}>
+        <h2 className={styles.title}>{title}</h2>
+        <div className={styles.statusInline}>
+          <StatusBadge status={status} />
+          <p className={styles.statusLabel}>{status.toUpperCase()}</p>
+        </div>
+      </div>
 
       <p className={styles.value}>
         <span className={styles.label}>Temperature:</span>
-        {cToF(latest.temperatureC).toFixed(1)} °F
+        {cToF(reading.temperatureC).toFixed(1)} °F
       </p>
-
       <p className={styles.value}>
         <span className={styles.label}>Humidity:</span>
-        {latest.humidityPct.toFixed(1)} %
+        {reading.humidityPct.toFixed(1)} %
       </p>
-
       <p className={styles.value}>
         <span className={styles.label}>Pressure:</span>
-        {latest.pressureHPa.toFixed(2)} hPa
+        {reading.pressureHPa.toFixed(2)} hPa
       </p>
-
       <p className={styles.value}>
         <span className={styles.label}>Time:</span>
-        {formatDateTime(latest.timestamp)}
+        {formatDateTime(reading.timestamp)}
       </p>
     </div>
   );
-};
+}

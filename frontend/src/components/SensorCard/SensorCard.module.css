@@ -1,6 +1,8 @@
 .card {
-  width: 400px;
-  height: 200px;
+  width: 100%;
+  max-width: 400px;
+  min-height: 240px;
+  height: auto;
   border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 24px;
@@ -16,17 +18,11 @@
     color-mix(in srgb, var(--color-text-secondary) 20%, transparent);
 }
 
-/* .card:hover {
-  box-shadow: 0 4px 8px
-    color-mix(in srgb, var(--color-text-secondary) 20%, transparent);
-  border-color: var(--accent-cyan);
-} */
-
 .title {
   color: var(--color-text);
   font-size: 24px;
   font-weight: 600;
-  margin-top: 0px;
+  margin: 0px;
 }
 
 .label {
@@ -38,4 +34,24 @@
 .value {
   font-size: 18;
   font-weight: 200;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.statusInline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.statusLabel {
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
 }

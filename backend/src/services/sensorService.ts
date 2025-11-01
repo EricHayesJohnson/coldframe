@@ -9,7 +9,11 @@
  */
 
 import { SensorReading } from "../types";
-import { createSensorReading, getReadingsSince } from "../db/sensorModel";
+import {
+  createSensorReading,
+  getLatestReading,
+  getReadingsSince,
+} from "../db/sensorModel";
 import { subHours } from "date-fns";
 import { logger } from "../utils/logger";
 
@@ -53,4 +57,8 @@ export async function handleNewReading(reading: SensorReading) {
 export async function fetchRecentReadings(hours = 24) {
   const since = subHours(new Date(), hours);
   return getReadingsSince(since);
+}
+
+export async function fetchLatestReading() {
+  return getLatestReading();
 }

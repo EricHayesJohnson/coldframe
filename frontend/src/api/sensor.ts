@@ -45,13 +45,11 @@ export async function fetchSensorHistory(
  */
 export async function fetchLatestReading(): Promise<SensorReading | null> {
   try {
-    const res = await fetch(`/api/sensor/latest`, {
+    const res = await fetch(`${BASE_URL}/api/sensor/latest`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
       cache: "no-store",
     });
-
-    console.log("Fetching history from", process.env.NEXT_PUBLIC_API_URL);
 
     if (!res.ok) {
       console.error("fetchLatestReading HTTP error:", res.status);

@@ -35,3 +35,9 @@ export async function getReadingsSince(since: Date): Promise<SensorReading[]> {
     createdAt: r.createdAt.toISOString(),
   }));
 }
+
+export async function getLatestReading() {
+  return prisma.sensorReading.findFirst({
+    orderBy: { timestamp: "desc" },
+  });
+}

@@ -6,6 +6,7 @@ import { SensorReadingSchema } from "../validation/sensorSchema";
 import {
   handleNewReading,
   fetchRecentReadings,
+  fetchLatestReading,
 } from "../services/sensorService";
 import { verifyApiKey } from "../middleware/verifyApiKey";
 
@@ -51,6 +52,19 @@ export function sensorRoutes(io: Server) {
       return res.json(readings);
     } catch (err) {
       logger.error(err, "Failed to fetch readings");
+      return res.status(500).json({ error: "DB error" });
+    }
+  });
+
+  router.get("/latest", async (_req, res) => {
+    try {
+      const latest = await fetchLatestReading();
+      if (!latest) {
+        return res.status(404).json({ error: "No sensor data found" });
+      }
+      return res.json(latest);
+    } catch (err) {
+      logger.error(err, "Failed to fetch latest reading");
       return res.status(500).json({ error: "DB error" });
     }
   });

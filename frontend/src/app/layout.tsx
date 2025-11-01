@@ -3,6 +3,7 @@ import { Michroma, Exo_2 } from "next/font/google";
 import { SocketProvider } from "@/context/SocketContext";
 import { TrendsProvider } from "@/context/TrendsContext";
 import { NavBar } from "@/components/Navbar";
+import "react-loading-skeleton/dist/skeleton.css";
 import "@/app/globals.css";
 
 const michroma = Michroma({
