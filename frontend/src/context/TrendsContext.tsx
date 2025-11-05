@@ -24,7 +24,7 @@ export const TrendsProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [data, setData] = useState<SensorReading[]>([]);
-  const [range, setRange] = useState(100);
+  const [range, setRange] = useState(48);
   const [isLoading, setIsLoading] = useState(false);
 
   const loadData = useCallback(

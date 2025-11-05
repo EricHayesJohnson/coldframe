@@ -7,8 +7,8 @@ export default function Page() {
   return (
     <main className={styles.main}>
       <div className={styles.wrapper}>
-        <SensorCard title="ESP-32: Inside" />
-        <SensorCard title="ESP-32: Outside" />
+        <SensorCard title="Inside" />
+        <SensorCard title="Outside" />
       </div>
     </main>
   );

@@ -1,9 +1,12 @@
 import { Chart } from "@/components";
+import styles from "./page.module.css";
 
 export default function TrendsPage() {
   return (
-    <main style={{ padding: "32px", textAlign: "center" }}>
-      <Chart />
+    <main className={styles.main}>
+      <div className={styles.wrapper}>
+        <Chart />
+      </div>
     </main>
   );
 }

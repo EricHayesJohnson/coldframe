@@ -1,75 +1,127 @@
 "use client";
 
-import React from "react";
 import {
   XYChart,
-  AnimatedAxis,
-  AnimatedGrid,
-  AnimatedLineSeries,
+  Axis,
+  Grid,
+  LineSeries,
   Tooltip,
+  buildChartTheme,
 } from "@visx/xychart";
-import { SensorReading } from "../../shared/types";
+import { SensorReading } from "@/shared/types";
 import { useTrendsData } from "@/context/TrendsContext";
+import styles from "./Chart.module.css";
+import { cToF } from "@/utils/temperature";
 
 const xAccessor = (d: SensorReading) => new Date(d.timestamp).getTime();
-const yTemp = (d: SensorReading) => d.temperatureC;
-const yHumidity = (d: SensorReading) => d.humidityPct;
+const yAccessor = (d: SensorReading) => d.temperatureC;
 
 export function Chart() {
   const { data, isLoading } = useTrendsData();
 
-  if (isLoading) {
-    return <p className="text-gray-500 mt-4">Loading trend data...</p>;
-  }
+  const chartTheme = buildChartTheme({
+    backgroundColor: "var(--accent-orange)",
+    colors: ["var(--accent-cyan)"],
+    gridColor: "var(--color-border)",
+    gridColorDark: "var(--color-border)",
+    tickLength: 4,
+  });
 
-  if (!data?.length) {
-    return <p className="text-gray-500 mt-4">No data available.</p>;
+  if (isLoading) {
+    return (
+      <div className={styles.wrapper}>
+        <div className={styles.chartSkeleton}>
+          <div className={styles.loadingText}>Loading trend data</div>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="w-full h-[500px]">
+    <div className={styles.wrapper}>
       <XYChart
-        height={500}
+        height={480}
         xScale={{ type: "time" }}
-        yScale={{ type: "linear" }}
+        yScale={{ type: "linear", zero: false, nice: true }}
+        theme={chartTheme}
       >
-        <AnimatedGrid columns rows />
-        <AnimatedAxis orientation="bottom" label="Time" />
-        <AnimatedAxis orientation="left" label="Value" />
+        <Grid columns rows className={styles.grid} />
 
-        <AnimatedLineSeries
-          dataKey="Temperature (°C)"
-          data={data}
-          xAccessor={xAccessor}
-          yAccessor={yTemp}
+        <Axis
+          orientation="bottom"
+          numTicks={4}
+          // label="Time"
+          stroke="var(--color-border)"
+          tickStroke="var(--color-border)"
+          tickFormat={(v) => {
+            const d = new Date(v as number);
+            const hours = d.getHours();
+            const day = d.getDate();
+            const month = d.toLocaleString("en-US", { month: "short" });
+            return hours === 0
+              ? `${month} ${day}`
+              : d.toLocaleTimeString([], { hour: "numeric" });
+          }}
+          tickLabelProps={() => ({
+            fill: "var(--color-text-secondary)",
+            fontSize: 11,
+            textAnchor: "middle",
+            dy: "0.25em",
+          })}
         />
 
-        <AnimatedLineSeries
-          dataKey="Humidity (%)"
+        <Axis
+          orientation="left"
+          label="Temp"
+          stroke="var(--color-border)"
+          tickStroke="var(--color-border)"
+          tickFormat={(v) => `${Math.round(cToF(v as number))}`}
+          tickLabelProps={() => ({
+            fill: "var(--color-text-secondary)",
+            fontSize: 11,
+            textAnchor: "end",
+            dx: "-0.25em",
+            dy: "0.25em",
+          })}
+        />
+
+        <LineSeries
+          dataKey="Temperature"
           data={data}
           xAccessor={xAccessor}
-          yAccessor={yHumidity}
+          yAccessor={yAccessor}
+          stroke="var(--accent-cyan)"
+          strokeWidth={3}
         />
 
         <Tooltip<SensorReading>
           showSeriesGlyphs
+          snapTooltipToDatumX
+          className={styles.tooltipContainer}
           renderTooltip={({ tooltipData }) => {
             const d = tooltipData?.nearestDatum?.datum as
               | SensorReading
               | undefined;
             if (!d) return null;
             return (
-              <div className="bg-white border border-gray-300 p-1.5 text-sm rounded">
-                <div>🌡 Temp: {d.temperatureC.toFixed(1)} °C</div>
-                <div>💧 Humidity: {d.humidityPct.toFixed(1)} %</div>
-                <div className="text-gray-500">
-                  {new Date(d.timestamp).toLocaleTimeString()}
+              <div className={styles.tooltip}>
+                <div>{cToF(d.temperatureC).toFixed(1)} °F</div>
+                <div className={styles.tooltipTime}>
+                  {new Date(d.timestamp).toLocaleTimeString([], {
+                    hour: "numeric",
+                    minute: "2-digit",
+                  })}
                 </div>
               </div>
             );
           }}
         />
       </XYChart>
+      <p className={styles.disclaimer}>
+        Trend data currently displays a <strong>rolling 48-hour window</strong>.
+        Future versions will support <strong>custom time frames</strong> for
+        deeper seasonal and micro-climate insights.
+      </p>
     </div>
   );
 }
