@@ -15,8 +15,8 @@ export const NavBar = () => {
         <Link href="/trends" className={styles.link}>
           Trends
         </Link>
-        <Link href="/vision" className={styles.link}>
-          Vision
+        <Link href="/about" className={styles.link}>
+          About
         </Link>
       </div>
     </nav>

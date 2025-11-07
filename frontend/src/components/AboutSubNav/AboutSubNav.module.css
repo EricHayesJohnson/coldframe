@@ -1,0 +1,56 @@
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  border-bottom: 1px solid var(--surface-border, #ddd);
+  padding: 1rem 1rem;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* hide scrollbar in Firefox */
+}
+
+.nav::-webkit-scrollbar {
+  display: none; /* hide scrollbar in WebKit browsers */
+}
+
+.link {
+  position: relative;
+  color: #666;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.2s ease;
+  padding-bottom: 0.25rem;
+  white-space: nowrap;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--accent-orange);
+  transition: width 0.3s ease;
+}
+
+.link:hover {
+  color: #111;
+}
+
+.link:hover::after {
+  width: 100%;
+}
+
+.active {
+  color: #111;
+}
+
+@media (max-width: 440px) {
+  .nav {
+    justify-content: flex-start;
+    gap: 1.5rem;
+  }
+}
