@@ -7,8 +7,8 @@ import styles from "./AboutSubNav.module.css";
 const LINKS = [
   { href: "/about/overview", label: "Overview" },
   { href: "/about/design", label: "Design" },
-  { href: "/about/schematics", label: "Schematics" },
-  { href: "/about/roadmap", label: "Roadmap" },
+  { href: "/about/hardware", label: "Hardware" },
+  // { href: "/about/roadmap", label: "Roadmap" },
 ];
 
 export function AboutSubNav() {

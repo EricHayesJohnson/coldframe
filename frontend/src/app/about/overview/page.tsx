@@ -1,22 +1,30 @@
 export default function OverviewPage() {
   return (
     <section>
-      <h2>Overview</h2>
+      {/* <h2>Overview</h2> */}
       <p>
-        Coldframe grew out of the desire to combine two things that deeply
-        interest me, home gardening and building software. The name pays homage
-        to the project&apos;s humble roots.
+        Coldframe is a telemetry system that began with a box in my garden. I
+        put sensors on it. That box became the project&apos;s namesake.
       </p>
       <p>
-        What began as a simple prototype has turned into a full ecosystem, from
-        soldering and sealing enclosures to writing firmware, designing APIs and
-        styling UIs.
+        What started there has grown into a full data pipeline with dedicated
+        hardware, APIs, and a real-time monitoring dashboard. Along the way, the
+        project pushed me into unfamiliar territory: soldering circuits,
+        building enclosures, writing firmware. Each stretched the initial
+        concept into something I hadn&apos;t fully planned for.
       </p>
       <p>
-        Gardening rewards systems thinking, so it pairs very naturally with
-        engineering. I plan to keep exploring that overlap: connecting more
-        sensors, layering automation, and through experimentation learning what
-        it takes to build a dependable real-world system.
+        The deeper I&apos;ve gone, the more gardening and engineering seem to
+        operate on similar principles. Both reward systems-level thinking and
+        run on cycles of observation and adjustment. Act, measure, refine,
+        repeat.
+      </p>
+      <p>
+        Coldframe lives in that space, still growing. Future iterations will
+        explore mechanical garden automation, microclimate analytics, and things
+        I haven&apos;t yet considered. Maybe something technical, who knows,
+        maybe something creative. For now, I&apos;m watching to see what
+        emerges.
       </p>
     </section>
   );
