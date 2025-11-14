@@ -1,0 +1,120 @@
+.wrapper {
+  margin-top: 48px;
+  position: relative;
+}
+
+.navRow {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.arrows {
+  display: flex;
+  gap: 8px;
+  position: absolute;
+  top: -32px;
+  left: 0;
+}
+
+.arrows button {
+  background: var(--accent-cyan);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+}
+
+/* Only apply hover if not disabled */
+.arrows button:not(:disabled):hover {
+  opacity: 0.7;
+}
+
+.arrows button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.flow {
+  display: flex;
+  gap: 32px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 8px 0 24px;
+  scroll-behavior: smooth;
+}
+
+.flow::-webkit-scrollbar {
+  display: none;
+}
+
+.card {
+  flex: 0 0 85%;
+  max-width: 720px;
+  scroll-snap-align: start;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-top: 5px solid color-mix(in srgb, var(--accent-cyan) 60%, transparent);
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  padding: 24px;
+}
+
+.cardTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 12px;
+}
+
+.protocol {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+  font-family: var(--font-mono, monospace);
+}
+
+.payload {
+  font-family: var(--font-mono, monospace);
+  background: #f3f3f3;
+  border: 1px solid var(--color-border);
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.45;
+  margin-bottom: 16px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.desc {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  font-size: 16px;
+  max-width: 75ch;
+}
+
+@media (max-width: 700px) {
+  .flow {
+    gap: 16px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .payload {
+    font-size: 13px;
+    padding: 10px;
+  }
+}

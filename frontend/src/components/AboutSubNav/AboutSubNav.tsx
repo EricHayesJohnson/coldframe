@@ -8,7 +8,6 @@ const LINKS = [
   { href: "/about/overview", label: "Overview" },
   { href: "/about/design", label: "Design" },
   { href: "/about/hardware", label: "Hardware" },
-  // { href: "/about/roadmap", label: "Roadmap" },
 ];
 
 export function AboutSubNav() {

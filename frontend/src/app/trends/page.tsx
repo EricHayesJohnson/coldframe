@@ -3,7 +3,7 @@ import styles from "./page.module.css";
 
 export default function TrendsPage() {
   return (
-    <main className={styles.main}>
+    <main className={`${styles.main} fadeIn`}>
       <div className={styles.wrapper}>
         <Chart />
       </div>

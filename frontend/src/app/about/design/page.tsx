@@ -1,9 +1,10 @@
 import { ArchitectureDiagram } from "@/components/ArchitectureDiagram";
+import { DataJourney } from "@/components/DataJourney";
 
 export default function DesignPage() {
   return (
     <section>
-      {/* <h2>Design</h2> */}
+      <h2>Architecture</h2>
       <ArchitectureDiagram />
       <p>
         The above diagram shows the data flow for a single sensor node. The
@@ -14,6 +15,8 @@ export default function DesignPage() {
         consumes both streams: live data on the Feeds page and persistent data
         on the Trends page.
       </p>
+      <h2>Data Journey</h2>
+      <DataJourney />
     </section>
   );
 }

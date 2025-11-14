@@ -50,7 +50,6 @@
 
 @media (max-width: 440px) {
   .nav {
-    justify-content: flex-start;
     gap: 1.5rem;
   }
 }

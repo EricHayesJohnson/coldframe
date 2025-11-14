@@ -40,3 +40,14 @@
   border-radius: 8px;
   z-index: -1;
 }
+
+/* Hide controls on small mobile */
+@media (max-width: 700px) {
+  .container {
+    height: 350px;
+  }
+
+  .controlsWrapper {
+    display: none;
+  }
+}
