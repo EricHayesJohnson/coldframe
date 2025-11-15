@@ -15,7 +15,7 @@ export default function DesignPage() {
         consumes both streams: live data on the Feeds page and persistent data
         on the Trends page.
       </p>
-      <h2>Data Journey</h2>
+      <h2 style={{ marginTop: "32px" }}>Data Journey</h2>
       <DataJourney />
     </section>
   );
