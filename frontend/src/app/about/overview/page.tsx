@@ -1,7 +1,7 @@
 export default function OverviewPage() {
   return (
     <section>
-      {/* <h2>Overview</h2> */}
+      <h2>Overview</h2>
       <p>
         Coldframe is a telemetry system that began with a box in my garden. I
         put sensors on it. That box became the project&apos;s namesake.

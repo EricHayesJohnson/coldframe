@@ -19,6 +19,6 @@ The system stores hourly snapshots in a Supabase (Postgres) database and visuali
 | **Backend**          | Express 5 / Socket.IO 4       | REST + WebSocket event gateway            |
 | **Database**         | Supabase (Postgres)           | Prisma ORM for schema + queries           |
 | **IoT Device**       | ESP32 Feather HUZZAH + BME280 | Posts sensor data every 60s via WiFi      |
-| **Monorepo Tooling** | Nx                            | Manages builds, caching, dependency graph |
+| **Monorepo Tooling** | npm workspaces                | Manages workspaces and dependencies       |
 
 ---
